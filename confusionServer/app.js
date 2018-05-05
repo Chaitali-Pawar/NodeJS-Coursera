@@ -7,8 +7,23 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
-var promoRouter = require('./routes/promoRouter');
+var promoRouter = require('./routes/promotionRouter');
 var leaderRouter = require('./routes/leaderRouter');
+
+// connection to mongo db server using mongoose
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+const Dishes = require('./models/dishes');
+
+const url = 'mongodb://localhost:27017/confusion';
+const connect = mongoose.connect(url , {
+  useMongoClient :true
+});
+connect.then((db) => {
+  console.log ("connected to db");
+},err => {
+  console.log("error is "+err);
+})
 
 var app = express();
 
