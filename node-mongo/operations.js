@@ -5,12 +5,7 @@ const assert = require('assert');
 // will recieve the result.
 exports.insertDocument =(db,document,collection,callback) =>{
     const coll = db.collection(collection);
-    coll.insert(document ,(err,result) => {
-        assert.equal(err,null);
-        console.log("Inserted " + result.result.n +
-            " documents into the collection " + collection);
-        callback(result);
-    });
+   return  coll.insert(document );
 
 };
 
@@ -18,10 +13,7 @@ exports.insertDocument =(db,document,collection,callback) =>{
 
 exports.findDocuments =(db,collection,callback) => {
     const coll = db.collection(collection);
-    coll.find( {},(err,docs) => {
-        assert.equal(err,null);
-        callback(docs);
-    } );
+    coll.find( {}).toArray();
 };
 
 // function to update the content in document takes 5 params , in which collection of db , which attribute of
@@ -29,18 +21,10 @@ exports.findDocuments =(db,collection,callback) => {
 
 exports.updateDocument = (db,document,update,collection,callback) => {
     const coll = db.collection(collection);
-    coll.updateOne(document ,{ $set: update }, null, (err, result)=>{
-        assert.equal(err, null);
-        console.log("Updated the document with ", update);
-        callback(result); 
-    }) ;
+    return coll.updateOne(document, { $set: update }, null);
 };
 
 exports.removeDocument = (db, document, collection, callback) => {
     const coll = db.collection(collection);
-    coll.deleteOne(document, (err, result) => {
-        assert.equal(err, null);
-        console.log("Removed the document ", document);
-        callback(result);        
-    });
+    return coll.deleteOne(document);
 };
